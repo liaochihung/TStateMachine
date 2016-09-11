@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{373D0FD0-A121-447E-8D05-E9939E3610F7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TStateMachine</RootNamespace>
+    <AssemblyName>TStateMachine</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AssemblyVersion>1.0.0.260</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseThread.cs" />
+    <Compile Include="Disposer.cs" />
+    <Compile Include="GraphicsExtension.cs" />
+    <Compile Include="TCanvas.cs" />
+    <Compile Include="TConnectorLiens.cs" />
+    <Compile Include="TDesignMove.cs" />
+    <Compile Include="TLinkDirection.cs" />
+    <Compile Include="TOperation.cs" />
+    <Compile Include="TStateBoolean.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TStateConnector.cs" />
+    <Compile Include="TStateConst.cs" />
+    <Compile Include="TStateControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TStateControlDesigner.cs" />
+    <Compile Include="TStateLink.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TStateMachine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TStateMachineControlCollection.cs" />
+    <Compile Include="TStateMachineDesigner.cs" />
+    <Compile Include="TStateMachineOptions.cs" />
+    <Compile Include="TStateNode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TStateNodeBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TStatePath.cs" />
+    <Compile Include="TStatePathOwner.cs" />
+    <Compile Include="TStateStart.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TStateStop.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TStateThread.cs" />
+    <Compile Include="TStateTransition.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TVisualElement.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
