@@ -7,6 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachineTestUI", "State
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TStateMachineLibrary", "TStateMachineLibrary\TStateMachineLibrary.csproj", "{373D0FD0-A121-447E-8D05-E9939E3610F7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{57509777-CEA8-46B1-9DCC-A9D8041C5A96}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{09AE7F0C-13DA-468B-8ABB-63E696C0DAA9}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\TStateMachine demo - Pizzatron 2000.png = Resources\TStateMachine demo - Pizzatron 2000.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
