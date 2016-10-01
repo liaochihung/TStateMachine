@@ -56,6 +56,7 @@ namespace TStateMachineLibrary
 
             //SetParent(this.Parent);
         }
+
         void TStateControl_ParentChanged(object sender, EventArgs e)
         {
             SetParent(Parent);
@@ -131,27 +132,38 @@ namespace TStateMachineLibrary
 
         protected TStateMachine CheckStateMachine
         {
-            get { return GetCheckStateMachine(); }
+            get 
+            {
+                //if (StateMachine == null)
+                //    throw new Exception("Orphan " + this.Name);
+                return StateMachine;
+            }
         }
 
-        public TStateMachine StateMachine { get; set; }
+        public TStateMachine StateMachine
+        {
+            get { return _stateMachine; }
+            set { _stateMachine = value; }
+        }
 
         public bool Active
         {
             get
             {
-                return CheckStateMachine.State == this;
-            }
-            set
-            {
-                if (!value)
+                if (CheckStateMachine != null)
                 {
-                    CheckStateMachine.State = null;
+                    return CheckStateMachine.State == this;
                 }
                 else
                 {
-                    CheckStateMachine.State = this;
+                    return false;
                 }
+            }
+
+            set
+            {
+                if (CheckStateMachine != null)
+                    CheckStateMachine.State = (!value) ? null : this;
             }
         }
 
@@ -218,12 +230,12 @@ namespace TStateMachineLibrary
         //}
 
         // ------------------------------------------------------------------------------
-        public void SetParent(Control AParent)
+        public void SetParent(Control aParent)
         {
-            if (AParent != null && !(AParent is TStateMachine))
+            if (aParent != null && !(aParent is TStateMachine))
                 throw new Exception(this.Name + " must have a TStateMachine as parent");
 
-            _stateMachine = AParent as TStateMachine;
+            _stateMachine = aParent as TStateMachine;
         }
 
         // ------------------------------------------------------------------------------
@@ -238,8 +250,8 @@ namespace TStateMachineLibrary
         // ------------------------------------------------------------------------------
         public TStateMachine GetCheckStateMachine()
         {
-            if (StateMachine == null)
-                throw new Exception("Orphan " + this.Name);
+            //if (StateMachine == null)
+            //    throw new Exception("Orphan " + this.Name);
 
             return StateMachine;
         }
@@ -257,9 +269,9 @@ namespace TStateMachineLibrary
         }
 
         // ------------------------------------------------------------------------------
-        public void PrepareCanvas(TVisualElement Element)
+        protected virtual void PrepareCanvas(TVisualElement element)
         {
-            switch (Element)
+            switch (element)
             {
                 case TVisualElement.Shadow:
                     Canvas.MyPen.Width = 1;
@@ -272,7 +284,7 @@ namespace TStateMachineLibrary
                     Canvas.MyPen.Width = Active ? 2 : 1;
                     break;
                 case TVisualElement.Panel:
-                    Canvas.Brush = Active ? Canvas.ActiveBrush : Canvas.InActiveBrush;
+                    //Canvas.Brush = Active ? Canvas.ActiveBrush : Canvas.InActiveBrush;
                     break;
                 case TVisualElement.Text:
                     Canvas.FontColor = Active ? Color.White : Color.Black;
@@ -339,16 +351,35 @@ namespace TStateMachineLibrary
         // ------------------------------------------------------------------------------
         public void DoEnter()
         {
+            try
+            {
+                if (OnEnterState !=null)
+                    OnEnterState(this, EventArgs.Empty);
+            }
+            catch (Exception)
+            {
+                DoException();
+            }
         }
 
         // ------------------------------------------------------------------------------
         public void DoExit()
         {
+            try
+            {
+                if (OnExitState != null)
+                    OnExitState(this, EventArgs.Empty);
+            }
+            catch (Exception)
+            {
+                DoException();
+            }
         }
 
         // ------------------------------------------------------------------------------
         public void DoException()
         {
+            StateMachine.DoException(this);
         }
 
         // ------------------------------------------------------------------------------

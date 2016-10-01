@@ -6,3 +6,6 @@ This picture comes from that Delphi demo project,
 ![alt text](Resources/TStateMachine demo - Pizzatron 2000.png?raw=true "Demo Picture")
 
 I'm converting this project as a way to learn C#.
+
+Current picture :
+![alt text](Resources/CurrentPicture.pnj?raw=true "Current Picture")

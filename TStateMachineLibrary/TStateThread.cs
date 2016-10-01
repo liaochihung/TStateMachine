@@ -11,6 +11,39 @@ namespace TStateMachineLibrary
 	    private IntPtr FStartEvent;
 	    private TStateControl _state;
 
+	    public TStateControl State
+	    {
+	        get
+	        {
+	            if (NewState != null)
+	            {
+	                return NewState;
+	            }
+	            else
+	            {
+	                return _state;
+	            }
+	        }
+	        set
+	        {
+	            OldState = _state;
+	            NewState = value;
+	            if (value == null)
+	            {
+	                Terminate();
+	            }
+	            else
+	            {
+	                if (_state == null)
+	                {
+                        // todo: check how this should work.
+	                    //SetEvent(FStartEvent);
+	                    _eventWait.Set();
+	                }
+	            }
+	        }
+	    }
+
 	    public TStateMachine StateMachine { get; set; }
 
         public EventHandler OnCompletedEventHandler { get; set; }
@@ -52,15 +85,14 @@ namespace TStateMachineLibrary
 	        if (Terminated)
 	            return;
 
-            //if (StateMachine.HandlesTransitionEvent())
-            StateMachine.DoTransition();
+	        if (StateMachine.HandlesTransitionEvent())
+	            StateMachine.DoTransition();
 	    }
 	
         private EventWaitHandle _eventWait = new AutoResetEvent(false);
 
 	    protected void Execute()
 	    {
-            //if(StateMachine.OnThreadStart!=null)
             StateMachine.ThreadStart();
 
 	        try
@@ -75,6 +107,7 @@ namespace TStateMachineLibrary
 	                // do
 	                DoEnterState(_state);
 
+                    Thread.Sleep(500);
 	                if (Terminated)
 	                    break;
 

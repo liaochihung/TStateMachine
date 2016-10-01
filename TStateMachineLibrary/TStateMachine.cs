@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
@@ -50,7 +51,36 @@ namespace TStateMachineLibrary
 
         public bool Active { get; set; }
 
-        public TStateControl State { get; set; }
+        private TStateControl _state;
+        public TStateControl State
+        {
+            get
+            {
+                if (IsInDesignMode || !(Active))
+                {
+                    return _state;
+                }
+                else
+                {
+                    return _thread.State;
+                }
+            }
+            set
+            {
+                if (value != null && value.StateMachine != this)
+                    throw new Exception("Cannot change to state in another state machine");
+
+                if (Active)
+                {
+                    Debug.Assert(_thread != null);
+                    _thread.State = value;
+                }
+                else
+                {
+                    _state = value;
+                }
+            }
+        }
 
         public TStateMachineOptions Options { get; set; }
 
@@ -104,12 +134,15 @@ namespace TStateMachineLibrary
         /// <summary>
         /// Is in design mode.
         /// </summary>
-        protected bool IsInDesignMode;
+        protected bool IsInDesignMode 
+        {
+            get { return LicenseManager.UsageMode == LicenseUsageMode.Designtime; } 
+        }
+                
 
         public TStateMachine()
         {
-            IsInDesignMode =
-                LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+            //IsInDesignMode =
             FDesignMoving = TDesignMove.None;
 
             OnSingleStep = null;
@@ -220,14 +253,13 @@ namespace TStateMachineLibrary
         // ------------------------------------------------------------------------------
         public bool HandlesTransitionEvent()
         {
-            bool result = false;
-            return result;
+            return OnChangeState != null;
         }
 
         // ------------------------------------------------------------------------------
         public void DoTransition()
         {
-            if (_thread.OldState!=null)
+            if (_thread.OldState != null)
                 _thread.OldState.Invalidate();
 
             if (_thread.NewState != null)

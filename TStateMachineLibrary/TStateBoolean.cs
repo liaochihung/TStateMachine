@@ -142,11 +142,11 @@ namespace TStateMachineLibrary
             DrawLetter(g, Text);
         }
 
-        public void PrepareCanvas(TVisualElement Element)
+        protected override void PrepareCanvas(TVisualElement element)
         {
-            base.PrepareCanvas(Element);
+            base.PrepareCanvas(element);
 
-            switch (Element)
+            switch (element)
             {
                 case TVisualElement.Text:
                     // todo : add condition below 

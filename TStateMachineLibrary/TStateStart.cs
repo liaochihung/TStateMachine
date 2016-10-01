@@ -50,10 +50,10 @@ namespace TStateMachineLibrary
             DrawLetter(g, Text);
         }
 
-        protected void PrepareCanvas(TVisualElement Element)
+        protected override void PrepareCanvas(TVisualElement element)
         {
-            //base.PrepareCanvas(Element);
-            switch (Element)
+            base.PrepareCanvas(element);
+            switch (element)
             {
                 case TVisualElement.Frame:
                     Canvas.MyPen.Width = 2;

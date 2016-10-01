@@ -9,7 +9,7 @@ namespace TStateMachineLibrary
     /// <summary>
     /// TStateNode
     /// </summary>
-    //[DefaultEvent("OnEnterState")]
+    [DefaultEvent("OnEnterState")]
     [ToolboxItem(true)]
     public class TStateNode : TStateNodeBase
     {
@@ -57,6 +57,7 @@ namespace TStateMachineLibrary
 
         public void PaintConnector()
         {
+            return;
             base.PaintConnector();
             //StateMachine.CreateGraphics()
             FToConnector.Paint();
@@ -70,12 +71,12 @@ namespace TStateMachineLibrary
         }
 
         // ------------------------------------------------------------------------------
-        public void PrepareCanvas(TVisualElement Element)
+        protected override void PrepareCanvas(TVisualElement element)
         {
-            base.PrepareCanvas(Element);
+            base.PrepareCanvas(element);
 
             // todo: add not assigned onenterstate condition
-            if (Element == TVisualElement.Text || IsInDesignMode)
+            if (element == TVisualElement.Text || IsInDesignMode)
                 Canvas.FontColor = Color.Gray;
         }
 
