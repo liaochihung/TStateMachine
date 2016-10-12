@@ -7,7 +7,7 @@ namespace TStateMachineLibrary
     {
         private Rectangle BoundsRect;
 
-        public TStatePath ActualPath { get; set; }
+        public TStatePath _actualPath { get; set; }
 
         public int Offset { get; set; }
 
@@ -46,7 +46,7 @@ namespace TStateMachineLibrary
             }
 
             Path = TStatePath.Auto;
-            ActualPath = Path;
+            _actualPath = Path;
         }
 
         public bool GetLines(ref Point[] lines)
@@ -58,7 +58,7 @@ namespace TStateMachineLibrary
             int dx, dy;
             int d2x, d2y;
             int DirectionX = 0, DirectionY = 0;
-            ////                   +--------+
+            //                   +--------+
             //                   |  Dest  |
             //                d1 |   p2   | ^
             //                   |        | |
@@ -80,6 +80,7 @@ namespace TStateMachineLibrary
 
             r1 = Source.Bounds;
             r2 = Destination.Bounds;
+
             p1 = new Point(r1.Left + Source.Width / 2, r1.Top + Source.Height / 2);
             p2 = new Point(r2.Left + Destination.Width / 2, r2.Top + Destination.Height / 2);
 
@@ -88,7 +89,7 @@ namespace TStateMachineLibrary
             if (dx == 0)
                 DirectionX = 0;
             else
-                DirectionY = dx / Math.Abs(dx);
+                DirectionX = dx / Math.Abs(dx);
 
             if (dy == 0)
                 DirectionY = 0;
@@ -100,83 +101,83 @@ namespace TStateMachineLibrary
 
             OverlapY = (d2y <= TStateConst.OverlapYMargin);
 
-            ActualPath = Path;
-            if (ActualPath == TStatePath.RightBottom &&
+            _actualPath = Path;
+            if (_actualPath == TStatePath.RightBottom &&
                 ((Math.Abs(dx) - (Source.Width / 2) < TStateConst.OverlapXmargin) ||
                  (d2y + (Source.Height / 2) < TStateConst.OverlapYMargin)) ||
-                ((ActualPath == TStatePath.TopLeft) &&
+                ((_actualPath == TStatePath.TopLeft) &&
                  ((Math.Abs(dy) - (Source.Height / 2) < TStateConst.OverlapYMargin) ||
                   (d2x + (Source.Width / 2) < TStateConst.OverlapXmargin))))
-                ActualPath = TStatePath.Auto;
+                _actualPath = TStatePath.Auto;
 
-            if (ActualPath == TStatePath.Auto || ActualPath == TStatePath.Direct)
+            if (_actualPath == TStatePath.Auto || _actualPath == TStatePath.Direct)
             {
                 if (OverlapY || (d2x > d2y))
-                    ActualPath = TStatePath.LeftRight;
+                    _actualPath = TStatePath.LeftRight;
                 else
-                    ActualPath = TStatePath.TopBottom;
+                    _actualPath = TStatePath.TopBottom;
             }
             else
             {
-                ActualPath = this.Path;
+                _actualPath = this.Path;
             }
 
-            if (ActualPath == TStatePath.LeftRight ||
-                ActualPath == TStatePath.RightBottom)
+            switch (_actualPath)
             {
-                if (DirectionX > 0)
-                    lines[TDesignMove.Source] = 
-                        new Point(r1.Right + 1, p1.Y);
-                else if (DirectionX < 0)
-                    lines[TDesignMove.Source] = 
-                        new Point(r1.Left - 1, p1.Y);
-                else
-                    lines[TDesignMove.Source] = p1;
+                case TStatePath.RightBottom:
+                case TStatePath.LeftRight:
+                    if (DirectionX > 0)
+                        lines[TDesignMove.Source] = 
+                            new Point(r1.Right + 1, p1.Y);
+                    else if (DirectionX < 0)
+                        lines[TDesignMove.Source] = 
+                            new Point(r1.Left - 1, p1.Y);
+                    else
+                        lines[TDesignMove.Source] = p1;
+                    break;
+                case TStatePath.TopLeft:
+                case TStatePath.TopBottom:
+                    if (DirectionY > 0)
+                        lines[TDesignMove.Source] = 
+                            new Point(p1.X, r1.Bottom + 1);
+                    else if (DirectionY < 0)
+                        lines[TDesignMove.Source] = 
+                            new Point(p1.X, r1.Top - 1);
+                    else
+                        lines[TDesignMove.Source] = p1;
+                    break;
             }
 
-            if (ActualPath == TStatePath.TopBottom ||
-                     ActualPath == TStatePath.TopLeft)
+            switch (_actualPath)
             {
-                if (DirectionY > 0)
-                    lines[TDesignMove.Source] = 
-                        new Point(p1.X, r1.Bottom + 1);
-                else if (DirectionY < 0)
-                    lines[TDesignMove.Source] = 
-                        new Point(p1.X, r1.Top - 1);
-                else
-                    lines[TDesignMove.Source] = p1;
-            }
-
-            if (ActualPath == TStatePath.LeftRight ||
-                ActualPath == TStatePath.TopLeft)
-            {
-                if (DirectionX > 0)
-                    lines[TDesignMove.Destination] = 
-                        new Point(r2.Left - 1, p2.Y);
-                else if (DirectionX < 0)
-                    lines[TDesignMove.Destination] = 
-                        new Point(r2.Right + 1, p2.Y);
-                else
-                    lines[TDesignMove.Destination] = p2;
-            }
-
-            if (ActualPath == TStatePath.TopBottom ||
-                ActualPath == TStatePath.RightBottom)
-            {
-                if (DirectionY > 0)
-                    lines[TDesignMove.Destination] = 
-                        new Point(p2.X, r2.Top - 1);
-                else if (DirectionY < 0)
-                    lines[TDesignMove.Destination] = 
-                        new Point(p2.X, r2.Bottom + 1);
-                else
-                    lines[TDesignMove.Destination] = p2;
+                case TStatePath.TopLeft:
+                case TStatePath.LeftRight:
+                    if (DirectionX > 0)
+                        lines[TDesignMove.Destination] = 
+                            new Point(r2.Left - 1, p2.Y);
+                    else if (DirectionX < 0)
+                        lines[TDesignMove.Destination] = 
+                            new Point(r2.Right + 1, p2.Y);
+                    else
+                        lines[TDesignMove.Destination] = p2;
+                    break;
+                case TStatePath.RightBottom:
+                case TStatePath.TopBottom:
+                    if (DirectionY > 0)
+                        lines[TDesignMove.Destination] = 
+                            new Point(p2.X, r2.Top - 1);
+                    else if (DirectionY < 0)
+                        lines[TDesignMove.Destination] = 
+                            new Point(p2.X, r2.Bottom + 1);
+                    else
+                        lines[TDesignMove.Destination] = p2;
+                    break;
             }
 
             if (this.Path == TStatePath.Direct)
-                ActualPath = TStatePath.Direct;
+                _actualPath = TStatePath.Direct;
 
-            switch (ActualPath)
+            switch (_actualPath)
             {
                 case TStatePath.Direct:
                     dx = (lines[TDesignMove.Destination].X - lines[TDesignMove.Source].X) / 4;
@@ -223,7 +224,7 @@ namespace TStateMachineLibrary
 
             }
 
-            switch (ActualPath)
+            switch (_actualPath)
             {
                 case TStatePath.LeftRight:
                     lines[TDesignMove.FirstHandle] =
@@ -300,24 +301,21 @@ namespace TStateMachineLibrary
                 return;
 
             var g = Source.StateMachine.CreateGraphics();
-            var size = 0;
+            var size = 4;
             TStatePath workPath;
             var saveWidth = 0;
             var direction = 0;
             var arrow = new Point[3];
 
             arrow[0] = lines[TDesignMove.Destination];
-            if (ActualPath == TStatePath.Direct)
+            if (_actualPath == TStatePath.Direct)
             {
-                if (Math.Abs(lines[TDesignMove.Destination].X - lines[TDesignMove.Source].X) >
-                    Math.Abs(lines[TDesignMove.Destination].Y - lines[TDesignMove.Source].Y))
-                    workPath = TStatePath.LeftRight;
-                else
-                    workPath = TStatePath.TopBottom;
+                workPath = Math.Abs(lines[TDesignMove.Destination].X - lines[TDesignMove.Source].X) >
+                           Math.Abs(lines[TDesignMove.Destination].Y - lines[TDesignMove.Source].Y) ? TStatePath.LeftRight : TStatePath.TopBottom;
             }
             else
             {
-                workPath = ActualPath;
+                workPath = _actualPath;
             }
 
             switch (workPath)
@@ -347,12 +345,15 @@ namespace TStateMachineLibrary
                     arrow[2] = new Point(arrow[0].X + (3 + size), arrow[0].Y - (3 + size) * direction);
                     break;
             }
-            g.DrawRectangle(Pens.Chocolate, 10, 10, 100, 100);
-            g.DrawPolygon(new Pen(Color.GreenYellow), lines);
+            
+            //g.DrawRectangle(Pens.Chocolate, 10, 10, 100, 100);
+            //g.DrawPolygon(new Pen(Color.Black), lines);
+            g.DrawLines(new Pen(Color.Black), lines);
 
             saveWidth = Source.StateMachine.PenWidth;
             Source.StateMachine.PenWidth = 1;
-            g.DrawPolygon(new Pen(Color.Fuchsia), arrow);
+            g.DrawPolygon(new Pen(Color.Black), arrow);
+            g.FillPolygon(new SolidBrush(Color.Black), arrow);
             Source.StateMachine.PenWidth = saveWidth;
 
             if (IsInDesignMode)
@@ -362,7 +363,7 @@ namespace TStateMachineLibrary
                     for (int i = 1; i < TDesignMove.LastHandle; i++)
                     {
                         if (i != TDesignMove.Offset ||
-                            !(ActualPath == TStatePath.TopLeft || ActualPath == TStatePath.RightBottom))
+                            !(_actualPath == TStatePath.TopLeft || _actualPath == TStatePath.RightBottom))
                         {
                             g.DrawRectangle(
                                 Pens.BlueViolet, 

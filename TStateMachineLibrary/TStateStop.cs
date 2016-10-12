@@ -18,11 +18,6 @@ namespace TStateMachineLibrary
     [ToolboxItem(true)]
     public class TStateStop : TStateControl
     {
-
-        //public TStateStop(Component AOwner) : base(AOwner)
-        //{
-        //}
-
         public TStateStop()
         {
         }
@@ -32,11 +27,6 @@ namespace TStateMachineLibrary
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Element"></param>
-        /// <param name="Canvas"></param>
         protected void PrepareCanvas(TVisualElement Element)
         {
             base.PrepareCanvas(Element);

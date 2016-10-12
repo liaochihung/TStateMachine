@@ -17,67 +17,64 @@ namespace TStateMachineLibrary
         }
         public TBooleanStateEvent OnEnterState
         {
-            get
-            {
-                return FOnEnterState;
-            }
-            set
-            {
-                FOnEnterState = value;
-            }
+            get { return FOnEnterState; }
+            set { FOnEnterState = value; }
         }
         public object OnExitState;
         public TStateControl TrueState
         {
-            get
-            {
-                return _fTrueState;
-            }
+            get { return _trueState; }
             set
             {
-                SetTrueState(value);
+                _trueState = value;
+                _trueConnector.Destination = value;
+
+                // True and False should not be the same
+                if (value != null && FalseState == value)
+                    _falseState = null;
+
+                if (StateMachine != null)
+                    StateMachine.Invalidate();
             }
         }
 
         public TStateControl FalseState
         {
-            get
-            {
-                return FFalseState;
-            }
+            get { return _falseState; }
             set
             {
-                SetFalseState(value);
+                _falseState = value;
+                _falseConnector.Destination = value;
+
+                // True and False should not be the same
+                if (value != null && _trueState == value)
+                    _trueState = null;
+
+                if (StateMachine != null)
+                    StateMachine.Invalidate();
             }
         }
 
         public bool DefaultState
         {
-            get
-            {
-                return FDefault;
-            }
+            get { return _default; }
             set
             {
-                SetDefault(value);
+                if (value != _default)
+                {
+                    _default = value;
+                    StateMachine.Invalidate();
+                }
             }
         }
         private TBooleanStateEvent FOnEnterState = null;
-        private TStateControl _fTrueState = null;
-        private TStateControl FFalseState = null;
-        private TStateConnector FTrueConnector = null;
-        private TStateConnector FFalseConnector = null;
-        private bool FResult = false;
-        private bool FDefault = true;
-        // ------------------------------------------------------------------------------
-        // TStateBoolean
-        // ------------------------------------------------------------------------------
-        //Constructor  Create( AOwner)
-        //public TStateBoolean(Component AOwner)
-        //{
-        //}
-        // ------------------------------------------------------------------------------
-        //@ Destructor  Destroy()
+        private TStateControl _trueState = null;
+        private TStateControl _falseState = null;
+        private TStateConnector _trueConnector = null;
+        private TStateConnector _falseConnector = null;
+        private bool _result = false;
+        private bool _default = true;
+        
         ~TStateBoolean()
         {
         }
@@ -92,20 +89,12 @@ namespace TStateMachineLibrary
         }
 
         // ------------------------------------------------------------------------------
-        public void PaintConnector()
-        {
-        }
-
-        // ------------------------------------------------------------------------------
         public TStateConnector HitTest(Point Mouse)
         {
             TStateConnector result = null;
             return result;
         }
 
-        // ------------------------------------------------------------------------------
-
-        // ------------------------------------------------------------------------------
         public override void DoPaint(Graphics g)
         {
             GraphicsPath gp = new GraphicsPath();
@@ -151,7 +140,7 @@ namespace TStateMachineLibrary
                 case TVisualElement.Text:
                     // todo : add condition below 
                     //if not(Assigned(OnEnterState) or (csDesigning in ComponentState)) then
-                    if (IsInDesignMode)
+                    if (IsInDesignMode || (OnEnterState==null))
                         Canvas.FontColor = Color.Gray;
                     break;
                 case TVisualElement.Shadow:
@@ -160,65 +149,24 @@ namespace TStateMachineLibrary
             }
         }
 
-
-        // ------------------------------------------------------------------------------
-        public void SetTrueState(TStateControl Value)
-        {
-            _fTrueState = Value;
-            FTrueConnector.Destination = Value;
-
-            // True and False should not be the same
-            if (Value != null && FalseState == Value)
-                FFalseState = null;
-
-            if (StateMachine != null)
-                StateMachine.Invalidate();
-        }
-
-        // ------------------------------------------------------------------------------
-        public void SetFalseState(TStateControl Value)
-        {
-            FFalseState = Value;
-            FFalseConnector.Destination = Value;
-
-            // True and False should not be the same
-            if (Value != null && _fTrueState == Value)
-                _fTrueState = null;
-
-            if (StateMachine != null)
-                StateMachine.Invalidate();
-        }
-
-        // ------------------------------------------------------------------------------
-        public void SetDefault(bool Value)
-        {
-            if (Value != FDefault)
-            {
-                FDefault = Value;
-                StateMachine.Invalidate();
-            }
-        }
-
-        // ------------------------------------------------------------------------------
         public bool HandlesEnterEvent()
         {
             bool result = false;
             return result;
         }
 
-        // ------------------------------------------------------------------------------
         public void DoEnter()
         {
             base.DoEnter();
 
-            FResult = DefaultState;
+            _result = DefaultState;
 
             if (FOnEnterState == null)
                 return;
 
             try
             {
-                FOnEnterState(this, FResult);
+                FOnEnterState(this, _result);
             }
             catch (Exception)
             {
@@ -226,18 +174,17 @@ namespace TStateMachineLibrary
                 throw;
             }
 
-            if (StateMachine.State == this)
+            if (StateMachine.State != this) 
+                return;
+            if (_result)
             {
-                if (FResult)
-                {
-                    if (_fTrueState != null)
-                        StateMachine.State = _fTrueState;
-                }
-                else
-                {
-                    if (FFalseState != null)
-                        StateMachine.State = FFalseState;
-                }
+                if (_trueState != null)
+                    StateMachine.State = _trueState;
+            }
+            else
+            {
+                if (_falseState != null)
+                    StateMachine.State = _falseState;
             }
         }
 
@@ -248,11 +195,12 @@ namespace TStateMachineLibrary
         }
 
         protected new void DrawLetter(Graphics g, string letter)
-        { var rc = new Rectangle(
-                    Width / 7,
-                    Height / 7,
-                    Width - (Width / 7) * 2,
-                    Height - (Height / 7) * 2);
+        {
+            var rc = new Rectangle(
+                      Width / 7,
+                      Height / 7,
+                      Width - (Width / 7) * 2,
+                      Height - (Height / 7) * 2);
 
             float width = ((float)this.ClientRectangle.Width);
             float height = ((float)this.ClientRectangle.Width);

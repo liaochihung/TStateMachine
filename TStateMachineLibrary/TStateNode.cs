@@ -55,11 +55,9 @@ namespace TStateMachineLibrary
             PaintConnector();
         }
 
-        public void PaintConnector()
+        protected override void PaintConnector()
         {
-            return;
             base.PaintConnector();
-            //StateMachine.CreateGraphics()
             FToConnector.Paint();
         }
 
@@ -77,7 +75,7 @@ namespace TStateMachineLibrary
 
             // todo: add not assigned onenterstate condition
             if (element == TVisualElement.Text || IsInDesignMode)
-                Canvas.FontColor = Color.Gray;
+                Canvas.FontColor = Color.Black;
         }
 
         public override TStateControl Default()

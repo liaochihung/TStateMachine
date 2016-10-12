@@ -15,55 +15,47 @@ namespace TStateMachineLibrary
     {
         public TStateTransition()
         {
-            FToConnector = AddConnector(TStatePathOwner.OwnedBySource);
-            FFromConnector = AddConnector(TStatePathOwner.OwnedByDestination);
+            _toConnector = AddConnector(TStatePathOwner.OwnedBySource);
+            _fromConnector = AddConnector(TStatePathOwner.OwnedByDestination);
             SetBounds(0, 0, 41, 41);
         }
 
         public TStateControl FromState
         {
-          get {
-            return FFromState;
-          }
-          set {
-            SetFromState(value);
-          }
+            get { return _fromState; }
+            set { _fromState = value; }
         }
         public TStateControl ToState
         {
-          get {
-            return FToState;
-          }
-          set {
-            SetToState(value);
-          }
+            get { return _toState; }
+            set { _toState = value; }
         }
 
         public event EventHandler OnTransition;
-      
-        private TStateControl FFromState = null;
-        private TStateControl FToState = null;
+
+        private TStateControl _fromState = null;
+        private TStateControl _toState = null;
         private event EventHandler FOnTransition = null;
-        private TStateConnector FToConnector = null;
-        private TStateConnector FFromConnector = null;
+        private TStateConnector _toConnector = null;
+        private TStateConnector _fromConnector = null;
         // ------------------------------------------------------------------------------
         // TStateTransition
         // ------------------------------------------------------------------------------
         //Constructor  Create( AOwner)
         //public TStateTransition(Component AOwner):base(AOwner)
         //{
-        //    FToConnector = AddConnector(TStatePathOwner.OwnedBySource);
-        //    FFromConnector = AddConnector(TStatePathOwner.OwnedByDestination);
+        //    _toConnector = AddConnector(TStatePathOwner.OwnedBySource);
+        //    _fromConnector = AddConnector(TStatePathOwner.OwnedByDestination);
         //    SetBounds(0, 0, 41, 41);
         //}
         // ------------------------------------------------------------------------------
         //@ Destructor  Destroy()
         ~TStateTransition()
         {
-            FFromState = null;
-            FFromConnector = null;
-            FToState = null;
-            FToConnector = null;
+            _fromState = null;
+            _fromConnector = null;
+            _toState = null;
+            _toConnector = null;
         }
         // ------------------------------------------------------------------------------
         public void SetParent(Control AParent)
@@ -75,8 +67,8 @@ namespace TStateMachineLibrary
         public void SetBounds(int ALeft, int ATop, int AWidth, int AHeight)
         {
             base.SetBounds(ALeft, ATop, AWidth, AHeight);
-            FToConnector.Offset = 0;
-            FFromConnector.Offset = 0;
+            _toConnector.Offset = 0;
+            _fromConnector.Offset = 0;
         }
 
         // ------------------------------------------------------------------------------
@@ -85,25 +77,25 @@ namespace TStateMachineLibrary
         }
 
         // ------------------------------------------------------------------------------
-        public void PaintConnector()
+        protected override void PaintConnector()
         {
             base.PaintConnector();
             StateMachine.PenWidth = 1;
-            FFromConnector.Paint();
-            FToConnector.Paint();
+            _fromConnector.Paint();
+            _toConnector.Paint();
         }
 
         // ------------------------------------------------------------------------------
         public TStateConnector HitTest(Point Mouse)
         {
-            if (FToConnector.HitTest(Mouse))
+            if (_toConnector.HitTest(Mouse))
             {
-                return FToConnector;
+                return _toConnector;
             }
             else
             {
-                if (FFromConnector.HitTest(Mouse))
-                    return FFromConnector;
+                if (_fromConnector.HitTest(Mouse))
+                    return _fromConnector;
             }
             return null;
         }
@@ -122,7 +114,7 @@ namespace TStateMachineLibrary
             base.PrepareCanvas(Element);
             if (Element == TVisualElement.Text)
             {
-                if (FFromState != null && FToState != null || IsInDesignMode)
+                if (_fromState != null && _toState != null || IsInDesignMode)
                 {
                     Canvas.FontColor = Color.Gray;
                 }
@@ -143,10 +135,10 @@ namespace TStateMachineLibrary
 
             Graphics g = e.Graphics;
             PrepareCanvas(TVisualElement.Shadow);
-            g.DrawRoundedRectangle(Pens.Brown, rc.Top,rc.Left,rc.Width-1,rc.Height-1,10);
+            g.DrawRoundedRectangle(Pens.Brown, rc.Top, rc.Left, rc.Width - 1, rc.Height - 1, 10);
             g.FillRoundedRectangle(
-                new SolidBrush(Color.FromArgb(100,70,130,180)),
-                rc.Top,rc.Left,rc.Width-1,rc.Height-1,10);
+                new SolidBrush(Color.FromArgb(100, 70, 130, 180)),
+                rc.Top, rc.Left, rc.Width - 1, rc.Height - 1, 10);
 
             DrawName(g);
         }
@@ -157,30 +149,17 @@ namespace TStateMachineLibrary
             DrawLetter(g, Text);
         }
 
-        // ------------------------------------------------------------------------------
-        public void SetFromState(TStateControl Value)
-        {
-        }
-
-        // ------------------------------------------------------------------------------
-        public void SetToState(TStateControl Value)
-        {
-        }
-
-        // ------------------------------------------------------------------------------
         public bool HandlesEnterEvent()
         {
             bool result = false;
             return result;
         }
 
-        // ------------------------------------------------------------------------------
         public void DoEnter()
         {
             base.DoEnter();
         }
 
-        // ------------------------------------------------------------------------------
         public TStateControl __Default()
         {
             TStateControl result = null;

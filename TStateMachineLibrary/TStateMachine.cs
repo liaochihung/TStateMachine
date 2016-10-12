@@ -29,7 +29,7 @@ namespace TStateMachineLibrary
                     ClientRectangle.Width - (PenWidth),
                     ClientRectangle.Height - (PenWidth));
 
-                e.Graphics.FillRectangle(new SolidBrush(System.Drawing.Color.DarkGray), rc);
+                //e.Graphics.FillRectangle(new SolidBrush(System.Drawing.Color.DarkCyan), rc);
 
                 //e.Graphics.DrawRectangle(Pens.Blue, rc);
                 e.Graphics.DrawRectangle(p, rc);
@@ -49,7 +49,32 @@ namespace TStateMachineLibrary
             return new TStateMachineControlCollection(this);
         }
 
-        public bool Active { get; set; }
+        private bool _active;
+
+        public bool Active
+        {
+            get { return _active; }
+            set
+            {
+                if (IsInDesignMode)
+                {
+                    if (_active == value)
+                        return;
+                    if (value)
+                    {
+                        Execute();
+                    }
+                    else
+                    {
+                        Stop();
+                    }
+                }
+                else
+                {
+                    _active = value;
+                }
+            }
+        }
 
         private TStateControl _state;
         public TStateControl State
@@ -67,10 +92,10 @@ namespace TStateMachineLibrary
             }
             set
             {
-                if (value != null && value.StateMachine != this)
+                if ((value != null) && (value.StateMachine != this))
                     throw new Exception("Cannot change to state in another state machine");
 
-                if (Active)
+                if (Active && IsInDesignMode)
                 {
                     Debug.Assert(_thread != null);
                     _thread.State = value;
@@ -154,7 +179,7 @@ namespace TStateMachineLibrary
             OnChangeState = null;
 
             this.Options = TStateMachineOptions.Interactive;
-            Active = false;
+            _active = false;
 
             this.ControlRemoved += TStateMachine_ControlRemoved;
         }
@@ -206,9 +231,9 @@ namespace TStateMachineLibrary
         // ------------------------------------------------------------------------------
         protected override void OnLoad(EventArgs e)
         {
-            if (Active)
+            if (_active)
             {
-                Active = false;
+                _active = false;
                 Execute();
             }
             base.OnLoad(e);
@@ -223,11 +248,11 @@ namespace TStateMachineLibrary
             if (Active)
                 throw new Exception("Already executing");
 
-            TStateControl initialState = State;
-            State = null;
+            TStateControl initialState = _state;
+            _state = null;
 
             CreateThread();
-            Active = true;
+            _active = true;
 
             State = initialState;
 
@@ -241,11 +266,11 @@ namespace TStateMachineLibrary
         // ------------------------------------------------------------------------------
         public void Stop()
         {
-            if (!Active)
+            if (!_active)
                 return;
 
             State = null;
-            Active = false;
+            _active = false;
         }
 
 

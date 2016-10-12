@@ -32,7 +32,7 @@ namespace TStateMachineLibrary
                 rc.Height - shrinkAmount);
         }
 
-        protected override void DrawFrame(Graphics g, Rectangle rc)
+        protected override void DrawPanel(Graphics g, Rectangle rc)
         {
             PrepareCanvas(TVisualElement.Panel);
             float shrinkAmount = Canvas.MyPen.Width;

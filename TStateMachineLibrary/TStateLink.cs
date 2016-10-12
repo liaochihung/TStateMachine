@@ -85,7 +85,7 @@ namespace TStateMachineLibrary
         }
 
         // ------------------------------------------------------------------------------
-        public void PaintConnector()
+        protected override void PaintConnector()
         {
             base.PaintConnector();
             FConnector.Paint();

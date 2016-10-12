@@ -162,8 +162,10 @@ namespace TStateMachineLibrary
 
             set
             {
-                if (CheckStateMachine != null)
-                    CheckStateMachine.State = (!value) ? null : this;
+                if (CheckStateMachine == null)
+                    return;
+
+                CheckStateMachine.State = value ? this : null;
             }
         }
 
@@ -195,8 +197,6 @@ namespace TStateMachineLibrary
         private bool FPainting = false;
         private bool FSynchronize = false;
 
-        //private TNotifyEvent FOnEnterState = null;
-        //private TNotifyEvent FOnExitState = null;
         // ------------------------------------------------------------------------------
         // TStateControl
         // ------------------------------------------------------------------------------
@@ -284,7 +284,7 @@ namespace TStateMachineLibrary
                     Canvas.MyPen.Width = Active ? 2 : 1;
                     break;
                 case TVisualElement.Panel:
-                    //Canvas.Brush = Active ? Canvas.ActiveBrush : Canvas.InActiveBrush;
+                    Canvas.Brush = Active ? Canvas.ActiveBrush : Canvas.InActiveBrush;
                     break;
                 case TVisualElement.Text:
                     Canvas.FontColor = Active ? Color.White : Color.Black;
@@ -308,7 +308,7 @@ namespace TStateMachineLibrary
             DrawShadow(g, rc);
 
             rc.Offset(-TStateConst.ShadowHeight * 2, -TStateConst.ShadowHeight * 2);
-            DrawFrame(g, rc);
+            DrawPanel(g, rc);
             DrawBorder(g, rc);
 
             DrawName(g);
@@ -328,7 +328,7 @@ namespace TStateMachineLibrary
             g.DrawRectangle(Canvas.MyPen, 0, 0, rc.Width - 2, rc.Height - 2);
         }
 
-        protected virtual void DrawFrame(Graphics g, Rectangle rc)
+        protected virtual void DrawPanel(Graphics g, Rectangle rc)
         {
             // draw rectangle
             PrepareCanvas(TVisualElement.Panel);
@@ -343,7 +343,7 @@ namespace TStateMachineLibrary
         }
 
         // ------------------------------------------------------------------------------
-        public void PaintConnector()
+        protected virtual void PaintConnector()
         {
             PrepareCanvas(TVisualElement.Connector);
         }
