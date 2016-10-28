@@ -106,15 +106,10 @@ namespace StateMachineTest
             _value = 123;
         }
 
-        private void tStateBoolean1_OnEnterState_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void tStateBoolean1_OnEnterState(object sender, BooleanStateArgs e)
         {
             // check can this value return to caller
-            e.Result = true;
+            e.Result = false;
         }
 
         private void tStateMachine1_OnStop(object sender, EventArgs e)
@@ -137,6 +132,21 @@ namespace StateMachineTest
                 button1.Enabled = enable;
                 button2.Enabled = !enable;
             }
+        }
+
+        private void tStateNode5_OnEnterState(object sender, EventArgs e)
+        {
+            _value = 4321;
+        }
+
+        private void tStateNode6_OnEnterState(object sender, EventArgs e)
+        {
+            _value = 1111;
+        }
+
+        private void tStateTransition1_OnTransition_1(object sender, EventArgs e)
+        {
+            _value = 4333;
         }
     }
 }

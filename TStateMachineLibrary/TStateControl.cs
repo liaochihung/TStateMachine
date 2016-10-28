@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Text;
 using System.Drawing;
@@ -47,6 +49,7 @@ namespace TStateMachineLibrary
         protected bool IsInDesignMode;
         protected TStateControl()
         {
+            StateMachine = null;
             ParentChanged += TStateControl_ParentChanged;
 
             SetBounds(0, 0, 69, 41);
@@ -79,14 +82,18 @@ namespace TStateMachineLibrary
 
         }
 
+        //[Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        //new public string Text { get; set; }
+
         protected void DrawLetter(Graphics g, string letter)
         {
             var width = ((float)this.ClientRectangle.Width);
             var height = ((float)this.ClientRectangle.Width);
 
-            var emSize = height;
-            var font = new Font(FontFamily.GenericSansSerif, emSize, Canvas.FontStyle);
-            font = FindBestFitFont(g, letter, font, this.ClientRectangle.Size);
+            //var emSize = height;
+            var emSize = 9;
+            var font = new Font(FontFamily.GenericMonospace, emSize, Canvas.FontStyle);
+            //font = FindBestFitFont(g, letter, font, this.ClientRectangle.Size);
 
             var size = g.MeasureString(letter, font);
 
@@ -140,11 +147,7 @@ namespace TStateMachineLibrary
             }
         }
 
-        public TStateMachine StateMachine
-        {
-            get { return _stateMachine; }
-            set { _stateMachine = value; }
-        }
+        public TStateMachine StateMachine { get; set; }
 
         public bool Active
         {
@@ -192,7 +195,6 @@ namespace TStateMachineLibrary
             set { FSynchronize = value; }
         }
 
-        protected TStateMachine _stateMachine = null;
         private List<TStateConnector> FConnectors = null;
         private bool FPainting = false;
         private bool FSynchronize = false;
@@ -235,7 +237,7 @@ namespace TStateMachineLibrary
             if (aParent != null && !(aParent is TStateMachine))
                 throw new Exception(this.Name + " must have a TStateMachine as parent");
 
-            _stateMachine = aParent as TStateMachine;
+            StateMachine = aParent as TStateMachine;
         }
 
         // ------------------------------------------------------------------------------

@@ -300,6 +300,10 @@ namespace TStateMachineLibrary
             if (!GetLines(ref lines))
                 return;
 
+            // todo: check why this property has not been set
+            if (Source.StateMachine == null)
+                return;
+
             var g = Source.StateMachine.CreateGraphics();
             var size = 4;
             TStatePath workPath;

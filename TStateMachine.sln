@@ -14,7 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{09AE7F0C-13DA-468B-8ABB-63E696C0DAA9}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\CurrentPicture.png = Resources\CurrentPicture.png
+		Resources\CurrentStage.png = Resources\CurrentStage.png
+		Resources\RunStateMachine.gif = Resources\RunStateMachine.gif
 		Resources\TStateMachine demo - Pizzatron 2000.png = Resources\TStateMachine demo - Pizzatron 2000.png
 	EndProjectSection
 EndProject

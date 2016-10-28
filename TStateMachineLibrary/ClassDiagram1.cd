@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TStateMachineLibrary.BaseThread" Collapsed="true">
-    <Position X="0.75" Y="0.5" Width="1.5" />
+    <Position X="0.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQACAAAEACAEAgoBAAABAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>BaseThread.cs</FileName>
@@ -22,9 +22,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TStateMachineLibrary.TStateBoolean">
-    <Position X="5.25" Y="12.5" Width="1.5" />
+    <Position X="5.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ALAAAACAAABiAIACABAAKAIAAAEAQEAAAAAQICAAAAI=</HashCode>
+      <HashCode>ALAAAACAAABCAIACABAAKAIAgAEAQEAAAAAAICAAAAI=</HashCode>
       <FileName>TStateBoolean.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -42,10 +42,10 @@
       <FileName>TStateConst.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TStateMachineLibrary.TStateControl">
+  <Class Name="TStateMachineLibrary.TStateControl" Collapsed="true">
     <Position X="4.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AKCQAICAICBhCIgAABMgKRACwAQAAQBiIMAQIACAhqA=</HashCode>
+      <HashCode>AKCQAICAICBhCIAAABMgKRACwAQAAQBiIMAQIACAhqA=</HashCode>
       <FileName>TStateControl.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -57,9 +57,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TStateMachineLibrary.TStateLink" Collapsed="true">
-    <Position X="0.75" Y="11.25" Width="1.5" />
+    <Position X="0.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAACAAABAEQAABDAAAAAAgAAAQAAEAECAAAAAQAA=</HashCode>
+      <HashCode>AACAAACAAAAAACAAADACIAAAgAAAAAAEAEAIAAAAAAA=</HashCode>
       <FileName>TStateLink.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -92,42 +92,42 @@
     </TypeIdentifier>
   </Class>
   <Class Name="TStateMachineLibrary.TStateNode">
-    <Position X="7.5" Y="12.5" Width="1.5" />
+    <Position X="7.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAEACAAABAAAAAABAAIAEAgAAAQAAAABAAAAAAAEA=</HashCode>
       <FileName>TStateNode.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TStateMachineLibrary.TStateNodeBase" Collapsed="true">
-    <Position X="6.5" Y="11.25" Width="1.5" />
+    <Position X="6.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>TStateNodeBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TStateMachineLibrary.TStateStart">
-    <Position X="9.5" Y="16" Width="1.5" />
+    <Position X="7.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAABAAAAAAAAAAAABCAAAAAAAAAAA=</HashCode>
       <FileName>TStateStart.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TStateMachineLibrary.TStateStop" Collapsed="true">
-    <Position X="3" Y="11.25" Width="1.5" />
+  <Class Name="TStateMachineLibrary.TStateStop">
+    <Position X="3" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TStateStop.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TStateMachineLibrary.TStateThread">
-    <Position X="0.5" Y="1.75" Width="2.25" />
+    <Position X="0.5" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAYIAAEACIAAQIAAAAQAgIAEBAgEAAM=</HashCode>
       <FileName>TStateThread.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TStateMachineLibrary.TStateTransition" Collapsed="true">
-    <Position X="9.75" Y="11.25" Width="1.5" />
+    <Position X="9.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACCAAgCgACBAAIAAABIAAACAgAAgQAACBEAAgAAAAAA=</HashCode>
       <FileName>TStateTransition.cs</FileName>
@@ -219,21 +219,21 @@
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="TStateMachineLibrary.TNotifyEvent" Collapsed="true">
-    <Position X="15.75" Y="6.75" Width="1.5" />
+    <Position X="14" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAACAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TStateControl.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="TStateMachineLibrary.TChangeStateEvent" Collapsed="true">
-    <Position X="14" Y="6.75" Width="1.5" />
+    <Position X="12.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TStateMachine.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="TStateMachineLibrary.TStateExceptionEvent" Collapsed="true">
-    <Position X="17.5" Y="6.75" Width="1.5" />
+    <Position X="15.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TStateMachine.cs</FileName>

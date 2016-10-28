@@ -78,14 +78,10 @@ namespace TStateMachineLibrary
         {
         }
         // ------------------------------------------------------------------------------
-        public void SetBounds(int ALeft, int ATop, int AWidth, int AHeight)
-        {
-        }
+        //public void SetBounds(int ALeft, int ATop, int AWidth, int AHeight)
+        //{
+        //}
 
-        // ------------------------------------------------------------------------------
-        public void Notification(Component AComponent, TOperation Operation)
-        {
-        }
 
         // ------------------------------------------------------------------------------
         public TStateConnector HitTest(Point Mouse)
@@ -228,22 +224,23 @@ namespace TStateMachineLibrary
                       Width - (Width / 7) * 2,
                       Height - (Height / 7) * 2);
 
-            float width = ((float)this.ClientRectangle.Width);
-            float height = ((float)this.ClientRectangle.Width);
+            //float width = ((float)this.ClientRectangle.Width);
+            //float height = ((float)this.ClientRectangle.Width);
 
-            float emSize = height;
-            var font = new Font(FontFamily.GenericSansSerif, emSize, Canvas.FontStyle);
-            font = FindBestFitFont(g, letter, font, this.ClientRectangle.Size);
+            //float emSize = height;
+            float emSize = 9;
+            var font = new Font(FontFamily.GenericMonospace, emSize, Canvas.FontStyle);
+            //font = FindBestFitFont(g, letter, font, this.ClientRectangle.Size);
 
             var size = g.MeasureString(letter, font);
 
             var sf = new StringFormat();
-            //sf.LineAlignment = StringAlignment.Center;
+            sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
 
             //g.DrawString(letter, font, new SolidBrush(Color.Black), (width - size.Width) / 2, 0);
             //g.DrawString(letter, font, new SolidBrush(Canvas.FontColor), ClientRectangle, sf);
-            g.DrawString(letter, font, new SolidBrush(Canvas.FontColor), rc, sf);
+            g.DrawString(letter, font, new SolidBrush(Color.Black), rc, sf);
             font.Dispose();
         }
     }//end TStateBoolean

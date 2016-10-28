@@ -7,12 +7,13 @@ using Plasmoid.Extensions;
 namespace TStateMachineLibrary
 {
     [ToolboxItem(true)]
+    [DefaultEvent("")]
     public class TStateLink : TStateControl
     {
         public TStateLink()
         {
-            FDirection = TLinkDirection.Outgoing;
-            FConnector = AddConnector(TStatePathOwner.OwnedBySource);
+            _direction = TLinkDirection.Outgoing;
+            _connector = AddConnector(TStatePathOwner.OwnedBySource);
             SetBounds(0, 0, 41, 41);
         }
 
@@ -20,51 +21,68 @@ namespace TStateMachineLibrary
         {
             get
             {
-                return FDestination;
+                return _destination;
             }
             set
             {
-                SetDestination(value);
+                //if (value != null)// && (value.StateMachine != CheckStateMachine))
+                //    throw new Exception("Cannot connect to node in other state machine");
+
+                if (value == this)
+                    throw new Exception("Cannot connect link to self");
+
+                _destination = value;
+
+                if (value != null)
+                {
+                    if (value is TStateLink)
+                    {
+                        _direction = TLinkDirection.Outgoing;
+                        if (_connector != null)
+                            _connector.Destination = null;
+                    }
+                    else
+                    {
+                        _direction = TLinkDirection.Incoming;
+                        if (_connector != null)
+                            _connector.Destination = value;
+                    }
+                    _connector.Paint();
+                }
+
+                if (StateMachine != null)
+                    StateMachine.Invalidate();
             }
         }
         public TLinkDirection Direction
         {
             get
             {
-                return FDirection;
+                return _direction;
             }
             set
             {
-                SetDirection(value);
+                if (value == _direction)
+                    return;
+
+                _direction = value;
+                Destination = null;
+
+                if (StateMachine != null)
+                    StateMachine.Invalidate();
             }
         }
-        private TStateControl FDestination = null;
-        private TStateConnector FConnector = null;
-        private TLinkDirection FDirection;
-        // ------------------------------------------------------------------------------
-        // TStateLink
-        // ------------------------------------------------------------------------------
-        //Constructor  Create( AOwner)
-        //public TStateLink(Component AOwner)
-        //    : base(AOwner)
-        //{
-        //    FDirection = TLinkDirection.Outgoing;
-        //    FConnector = AddConnector(TStatePathOwner.OwnedBySource);
-        //    SetBounds(0, 0, 41, 41);
-        //}
+        private TStateControl _destination = null;
+        private TStateConnector _connector = null;
+        private TLinkDirection _direction;
 
-        // ------------------------------------------------------------------------------
-        //@ Destructor  Destroy()
         ~TStateLink()
         {
-            FConnector = null;
-            FDestination = null;
+            _connector = null;
+            _destination = null;
             Dispose();
         }
-        // ------------------------------------------------------------------------------
-        public void SetParent(Control AParent)
-        {
-        }
+
 
         // ------------------------------------------------------------------------------
         public void SetBounds(int ALeft, int ATop, int AWidth, int AHeight)
@@ -75,28 +93,19 @@ namespace TStateMachineLibrary
                 AWidth = AHeight;
 
             base.SetBounds(ALeft, ATop, AWidth, AHeight);
-            FConnector.Offset = 0;
+            _connector.Offset = 0;
         }
 
-        // ------------------------------------------------------------------------------
-        public void Notification(Component AComponent, TOperation Operation)
-        {
 
-        }
 
         // ------------------------------------------------------------------------------
         protected override void PaintConnector()
         {
             base.PaintConnector();
-            FConnector.Paint();
+
+            _connector.Paint();
         }
 
-        // ------------------------------------------------------------------------------
-        public TStateConnector HitTest(Point Mouse)
-        {
-            TStateConnector result = null;
-            return result;
-        }
 
         // ------------------------------------------------------------------------------
         public void PrepareCanvas(TVisualElement Element)
@@ -105,7 +114,7 @@ namespace TStateMachineLibrary
 
             if (Element == TVisualElement.Text)
             {
-                if (FDestination == null || IsInDesignMode)
+                if (_destination == null || IsInDesignMode)
                 {
                     Canvas.FontColor = Color.Gray;
                 }
@@ -116,16 +125,16 @@ namespace TStateMachineLibrary
         protected override void OnPaint(PaintEventArgs e)
         {
             //base.OnPaint(e);
-            Rectangle rc = this.ClientRectangle;
-            Graphics g = e.Graphics;
+            var rc = this.ClientRectangle;
+            var g = e.Graphics;
 
             PrepareCanvas(TVisualElement.Shadow);
             g.FillEllipse(
-                Canvas.Brush, 
-                TStateConst.ShadowHeight, 
+                Canvas.Brush,
                 TStateConst.ShadowHeight,
-                rc.Right-2,
-                rc.Height-2);
+                TStateConst.ShadowHeight,
+                rc.Right - 2,
+                rc.Height - 2);
 
             // draw rectangle
             PrepareCanvas(TVisualElement.Panel);
@@ -133,7 +142,7 @@ namespace TStateMachineLibrary
             g.FillEllipse(Canvas.Brush, rc);
 
             PrepareCanvas(TVisualElement.Frame);
-            g.DrawEllipse(Canvas.MyPen, 
+            g.DrawEllipse(Canvas.MyPen,
                 0,
                 0,
                 rc.Width,
@@ -142,52 +151,21 @@ namespace TStateMachineLibrary
             // draw name
             PrepareCanvas(TVisualElement.Text);
             DrawLetter(g, Text);
+
+            PaintConnector();
         }
 
-        // ------------------------------------------------------------------------------
-        public void SetDestination(TStateControl Value)
-        {
-            if (Value != null && (Value.StateMachine != CheckStateMachine))
-                throw new Exception("Cannot connect to node in other state machine");
-
-            if (Value == this)
-                throw new Exception("Cannot connect link to self");
-
-            FDestination = Value;
-
-            if (Value != null)
-            {
-                if (Value is TStateLink)
-                {
-                    FDirection= TLinkDirection.Outgoing;
-                    FConnector.Destination = null;
-                }
-                else
-                {
-                    FDirection= TLinkDirection.Incoming;
-                    FConnector.Destination = Value;
-                }
-                FConnector.Paint();
-            }
-
-            StateMachine.Invalidate();
-        }
-
-        // ------------------------------------------------------------------------------
-        public void SetDirection(TLinkDirection Value)
-        {
-            if (Value == FDirection)
-                return;
-            FDirection = Value;
-            Destination = null;
-            StateMachine.Invalidate();
-        }
-
-        // ------------------------------------------------------------------------------
-        public TStateControl __Default()
+        public override TStateControl Default()
         {
             return Destination;
         }
+        
+        //public override void SetParent(Control aParent)
+        //{
+        //    if (aParent != null && !(aParent is TStateMachine))
+        //        throw new Exception(this.Name + " must have a TStateMachine as parent");
 
+        //    StateMachine = aParent as TStateMachine;
+        //}
     }//end TStateLink
 }

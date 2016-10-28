@@ -7,5 +7,8 @@ This picture comes from that Delphi demo project,
 
 I'm converting this project as a way to learn C#.
 
+Running state:
+![alt text](Resources/RunStateMachine.gif?raw=true "Running state")
+
 Current stage :
-![alt text](Resources/RunStateMachine.gif?raw=true "Current Picture")
+![alt text](Resources/CurrentStage.png?raw=true "Current stage")

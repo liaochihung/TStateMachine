@@ -17,37 +17,25 @@ namespace TStateMachineLibrary
         {
             get
             {
-                return FDefaultTransition;
+                return _defaultTransition;
             }
+
             set
             {
-                FDefaultTransition = value;
-                FToConnector.Destination = value;
+                _defaultTransition = value;
+                _toConnector.Destination = value;
 
                 if (StateMachine != null)
                     StateMachine.Invalidate();
             }
         }
 
-        private TStateMachine FStateMachine = null;
-        private TStateControl FDefaultTransition = null;
-        private TStateConnector FToConnector = null;
+        private TStateControl _defaultTransition = null;
+        private TStateConnector _toConnector = null;
 
         public TStateNode()
         {
-            FToConnector = AddConnector(TStatePathOwner.OwnedBySource);
-        }
-
-        ~TStateNode()
-        {
-        }
-
-        public void SetBounds(int ALeft, int ATop, int AWidth, int AHeight)
-        {
-        }
-
-        public void Notification(Component AComponent, TOperation Operation)
-        {
+            _toConnector = AddConnector(TStatePathOwner.OwnedBySource);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -59,17 +47,9 @@ namespace TStateMachineLibrary
         protected override void PaintConnector()
         {
             base.PaintConnector();
-            FToConnector.Paint();
+            _toConnector.Paint();
         }
 
-        // ------------------------------------------------------------------------------
-        public TStateConnector HitTest(Point Mouse)
-        {
-            TStateConnector result = null;
-            return result;
-        }
-
-        // ------------------------------------------------------------------------------
         protected override void PrepareCanvas(TVisualElement element)
         {
             base.PrepareCanvas(element);
