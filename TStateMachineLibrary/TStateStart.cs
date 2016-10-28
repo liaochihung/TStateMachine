@@ -25,10 +25,10 @@ namespace TStateMachineLibrary
             PrepareCanvas(TVisualElement.Frame);
             float shrinkAmount = Canvas.MyPen.Width / 2;
             g.DrawRectangle(
-                Canvas.MyPen, 
-                shrinkAmount, 
-                shrinkAmount, 
-                rc.Width - shrinkAmount, 
+                Canvas.MyPen,
+                shrinkAmount,
+                shrinkAmount,
+                rc.Width - shrinkAmount,
                 rc.Height - shrinkAmount);
         }
 
@@ -37,10 +37,11 @@ namespace TStateMachineLibrary
             PrepareCanvas(TVisualElement.Panel);
             float shrinkAmount = Canvas.MyPen.Width;
             Rectangle oriRc = rc;
-            oriRc.Inflate((int) shrinkAmount*-1, (int) shrinkAmount*-1);
+            oriRc.Inflate((int)shrinkAmount * -1, (int)shrinkAmount * -1);
             RectangleF r = oriRc;
-            r.Offset(shrinkAmount*2,shrinkAmount*2);
-            g.FillRectangle(new SolidBrush(Color.Red), r);
+            r.Offset(shrinkAmount * 2, shrinkAmount * 2);
+            //g.FillRectangle(new SolidBrush(Color.Red), r);
+            g.FillRectangle(Canvas.Brush, r);
         }
 
         protected override void DrawName(Graphics g)
@@ -62,7 +63,8 @@ namespace TStateMachineLibrary
                     break;
                 case TVisualElement.Text:
                     Canvas.FontStyle = FontStyle.Bold;
-                    Canvas.FontColor = Color.White;
+                    //Canvas.FontColor = Color.White;
+                    Canvas.FontColor = Active ? Color.White : Color.Black;
                     break;
             }
         }

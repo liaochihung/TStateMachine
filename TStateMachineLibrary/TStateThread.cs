@@ -85,7 +85,7 @@ namespace TStateMachineLibrary
 	        if (Terminated)
 	            return;
 
-	        if (StateMachine.HandlesTransitionEvent())
+	        //if (StateMachine.HandlesTransitionEvent())
 	            StateMachine.DoTransition();
 	    }
 	

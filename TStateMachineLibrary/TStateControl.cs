@@ -81,16 +81,16 @@ namespace TStateMachineLibrary
 
         protected void DrawLetter(Graphics g, string letter)
         {
-            float width = ((float)this.ClientRectangle.Width);
-            float height = ((float)this.ClientRectangle.Width);
+            var width = ((float)this.ClientRectangle.Width);
+            var height = ((float)this.ClientRectangle.Width);
 
-            float emSize = height;
+            var emSize = height;
             var font = new Font(FontFamily.GenericSansSerif, emSize, Canvas.FontStyle);
             font = FindBestFitFont(g, letter, font, this.ClientRectangle.Size);
 
-            SizeF size = g.MeasureString(letter, font);
+            var size = g.MeasureString(letter, font);
 
-            StringFormat sf = new StringFormat();
+            var sf = new StringFormat();
             sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
 
@@ -104,14 +104,14 @@ namespace TStateMachineLibrary
             // Compute actual size, shrink if needed
             while (true)
             {
-                SizeF size = g.MeasureString(text, font);
+                var size = g.MeasureString(text, font);
 
                 // It fits, back out
                 if (size.Height <= proposedSize.Height &&
                      size.Width <= proposedSize.Width) { return font; }
 
                 // Try a smaller font (90% of old size)
-                Font oldFont = font;
+                var oldFont = font;
                 font = new Font(font.Name, (float)(font.Size * .9), font.Style);
                 oldFont.Dispose();
             }
@@ -132,7 +132,7 @@ namespace TStateMachineLibrary
 
         protected TStateMachine CheckStateMachine
         {
-            get 
+            get
             {
                 //if (StateMachine == null)
                 //    throw new Exception("Orphan " + this.Name);
@@ -349,11 +349,11 @@ namespace TStateMachineLibrary
         }
 
         // ------------------------------------------------------------------------------
-        public void DoEnter()
+        public virtual void DoEnter()
         {
             try
             {
-                if (OnEnterState !=null)
+                if (OnEnterState != null)
                     OnEnterState(this, EventArgs.Empty);
             }
             catch (Exception)

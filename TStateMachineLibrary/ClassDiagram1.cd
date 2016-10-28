@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TStateMachineLibrary.BaseThread" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAAAEACAEAgoBAAABAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>BaseThread.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TCanvas" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAIAAAAAECiIAAAAEAAQAAAEAAAACQEQACBAAAAA=</HashCode>
+      <FileName>TCanvas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TConnectorLiens" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TConnectorLiens.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateBoolean">
+    <Position X="5.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ALAAAACAAABiAIACABAAKAIAAAEAQEAAAAAQICAAAAI=</HashCode>
+      <FileName>TStateBoolean.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateConnector" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEgABAAgBAAAIgAAAAAAAAAAQAIAEEAAEgBgAogAA=</HashCode>
+      <FileName>TStateConnector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateConst" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAMAAAAAAAAAAAAAAEAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>TStateConst.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateControl">
+    <Position X="4.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AKCQAICAICBhCIgAABMgKRACwAQAAQBiIMAQIACAhqA=</HashCode>
+      <FileName>TStateControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateControlDesigner" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStateControlDesigner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateLink" Collapsed="true">
+    <Position X="0.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAACAAABAEQAABDAAAAAAgAAAQAAEAECAAAAAQAA=</HashCode>
+      <FileName>TStateLink.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateMachine" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCBUQAAgAgAUYAEAMFCAACwAQQEAQmIfAShgDKAAg=</HashCode>
+      <FileName>TStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.ChangeStateEventArgs" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>TStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateMachineControlCollection" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStateMachineControlCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateMachineDesigner" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStateMachineDesigner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateNode">
+    <Position X="7.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEACAAABAAAAAABAAIAEAgAAAQAAAABAAAAAAAEA=</HashCode>
+      <FileName>TStateNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateNodeBase" Collapsed="true">
+    <Position X="6.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>TStateNodeBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateStart">
+    <Position X="9.5" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAABAAAAAAAAAAAABCAAAAAAAAAAA=</HashCode>
+      <FileName>TStateStart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateStop" Collapsed="true">
+    <Position X="3" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStateStop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateThread">
+    <Position X="0.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAYIAAEACIAAQIAAAAQAgIAEBAgEAAM=</HashCode>
+      <FileName>TStateThread.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachineLibrary.TStateTransition" Collapsed="true">
+    <Position X="9.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCAAgCgACBAAIAAABIAAACAgAAgQAACBEAAgAAAAAA=</HashCode>
+      <FileName>TStateTransition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TStateMachine.Disposer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Disposer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plasmoid.Extensions.GraphicsExtension" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAABAQAIAAAAgA=</HashCode>
+      <FileName>GraphicsExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plasmoid.Extensions.FontMetrics" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAABAAAACAACAAABBAAACAAAAMAAAAAAACAAEA=</HashCode>
+      <FileName>GraphicsExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TStateMachineLibrary.TDesignMove" Collapsed="true">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAkAAAAAAAAAAARgAAAAAAAAEAABAAAEAgAA=</HashCode>
+      <FileName>TDesignMove.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="TStateMachineLibrary.TLinkDirection" Collapsed="true">
+    <Position X="14" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TLinkDirection.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TStateMachineLibrary.TOperation" Collapsed="true">
+    <Position X="15.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TOperation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TStateMachineLibrary.TStateMachineOptions" Collapsed="true">
+    <Position X="17.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAIAAAABAAAAA=</HashCode>
+      <FileName>TStateMachineOptions.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TStateMachineLibrary.TStatePath" Collapsed="true">
+    <Position X="12.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAAAAAAAAAAAIAAAAAAAAAECAAAAA=</HashCode>
+      <FileName>TStatePath.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TStateMachineLibrary.TStatePathOwner" Collapsed="true">
+    <Position X="14" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStatePathOwner.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TStateMachineLibrary.TVisualElement" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAQAAABAAAACAAAAAE=</HashCode>
+      <FileName>TVisualElement.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Plasmoid.Extensions.RectangleEdgeFilter" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAIAAAAEAAEA=</HashCode>
+      <FileName>GraphicsExtension.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="TStateMachineLibrary.TBooleanStateEvent" Collapsed="true">
+    <Position X="12.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>TStateBoolean.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="TStateMachineLibrary.TNotifyEvent" Collapsed="true">
+    <Position X="15.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStateControl.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="TStateMachineLibrary.TChangeStateEvent" Collapsed="true">
+    <Position X="14" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="TStateMachineLibrary.TStateExceptionEvent" Collapsed="true">
+    <Position X="17.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Microsoft JhengHei UI" Size="9" />
+</ClassDiagram>

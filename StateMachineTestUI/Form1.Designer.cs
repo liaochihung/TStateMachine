@@ -34,7 +34,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.tStateMachine1 = new TStateMachineLibrary.TStateMachine();
-            this.tStateStop1 = new TStateMachineLibrary.TStateStop();
+            this.tStateBoolean1 = new TStateMachineLibrary.TStateBoolean();
+            this.tStateNode3 = new TStateMachineLibrary.TStateNode();
+            this.tStateNode4 = new TStateMachineLibrary.TStateNode();
             this.tStateNode2 = new TStateMachineLibrary.TStateNode();
             this.tStateNode1 = new TStateMachineLibrary.TStateNode();
             this.tStateStart1 = new TStateMachineLibrary.TStateStart();
@@ -73,40 +75,75 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Stop";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // tStateMachine1
             // 
             this.tStateMachine1.Active = false;
-            this.tStateMachine1.Controls.Add(this.tStateStop1);
+            this.tStateMachine1.Controls.Add(this.tStateBoolean1);
+            this.tStateMachine1.Controls.Add(this.tStateNode4);
+            this.tStateMachine1.Controls.Add(this.tStateNode3);
             this.tStateMachine1.Controls.Add(this.tStateNode2);
             this.tStateMachine1.Controls.Add(this.tStateNode1);
             this.tStateMachine1.Controls.Add(this.tStateStart1);
             this.tStateMachine1.Location = new System.Drawing.Point(10, 10);
             this.tStateMachine1.Name = "tStateMachine1";
             this.tStateMachine1.Options = TStateMachineLibrary.TStateMachineOptions.Interactive;
-            this.tStateMachine1.Size = new System.Drawing.Size(359, 325);
+            this.tStateMachine1.Size = new System.Drawing.Size(359, 339);
             this.tStateMachine1.State = this.tStateStart1;
             this.tStateMachine1.TabIndex = 0;
+            this.tStateMachine1.OnStop += new System.EventHandler(this.tStateMachine1_OnStop);
             // 
-            // tStateStop1
+            // tStateBoolean1
             // 
-            this.tStateStop1.Active = false;
-            this.tStateStop1.Hint = "";
-            this.tStateStop1.Location = new System.Drawing.Point(16, 235);
-            this.tStateStop1.Name = "tStateStop1";
-            this.tStateStop1.Size = new System.Drawing.Size(93, 41);
-            this.tStateStop1.StateMachine = this.tStateMachine1;
-            this.tStateStop1.Synchronize = false;
-            this.tStateStop1.TabIndex = 3;
-            this.tStateStop1.Text = "Stop1";
-            this.tStateStop1.OnEnterState += new System.EventHandler(this.stop_OnEnterState);
+            this.tStateBoolean1.Active = false;
+            this.tStateBoolean1.DefaultState = true;
+            this.tStateBoolean1.FalseState = this.tStateNode3;
+            this.tStateBoolean1.Hint = "";
+            this.tStateBoolean1.Location = new System.Drawing.Point(165, 175);
+            this.tStateBoolean1.Name = "tStateBoolean1";
+            this.tStateBoolean1.Size = new System.Drawing.Size(117, 52);
+            this.tStateBoolean1.StateMachine = this.tStateMachine1;
+            this.tStateBoolean1.Synchronize = false;
+            this.tStateBoolean1.TabIndex = 6;
+            this.tStateBoolean1.Text = "tStateBoolean1";
+            this.tStateBoolean1.TrueState = this.tStateNode4;
+            this.tStateBoolean1.OnEnterState += new System.EventHandler<TStateMachineLibrary.BooleanStateArgs>(this.tStateBoolean1_OnEnterState);
+            // 
+            // tStateNode3
+            // 
+            this.tStateNode3.Active = false;
+            this.tStateNode3.DefaultTransition = null;
+            this.tStateNode3.Hint = "";
+            this.tStateNode3.Location = new System.Drawing.Point(40, 186);
+            this.tStateNode3.Name = "tStateNode3";
+            this.tStateNode3.Size = new System.Drawing.Size(69, 41);
+            this.tStateNode3.StateMachine = this.tStateMachine1;
+            this.tStateNode3.Synchronize = false;
+            this.tStateNode3.TabIndex = 4;
+            this.tStateNode3.Text = "tStateNode3";
+            this.tStateNode3.OnEnterState += new System.EventHandler(this.tStateNode3_OnEnterState);
+            // 
+            // tStateNode4
+            // 
+            this.tStateNode4.Active = false;
+            this.tStateNode4.DefaultTransition = null;
+            this.tStateNode4.Hint = "";
+            this.tStateNode4.Location = new System.Drawing.Point(189, 280);
+            this.tStateNode4.Name = "tStateNode4";
+            this.tStateNode4.Size = new System.Drawing.Size(69, 41);
+            this.tStateNode4.StateMachine = this.tStateMachine1;
+            this.tStateNode4.Synchronize = false;
+            this.tStateNode4.TabIndex = 5;
+            this.tStateNode4.Text = "tStateNode4";
+            this.tStateNode4.OnEnterState += new System.EventHandler(this.tStateNode4_OnEnterState);
             // 
             // tStateNode2
             // 
             this.tStateNode2.Active = false;
-            this.tStateNode2.DefaultTransition = this.tStateStop1;
+            this.tStateNode2.DefaultTransition = this.tStateBoolean1;
             this.tStateNode2.Hint = "";
-            this.tStateNode2.Location = new System.Drawing.Point(16, 168);
+            this.tStateNode2.Location = new System.Drawing.Point(165, 83);
             this.tStateNode2.Name = "tStateNode2";
             this.tStateNode2.Size = new System.Drawing.Size(93, 41);
             this.tStateNode2.StateMachine = this.tStateMachine1;
@@ -120,7 +157,7 @@
             this.tStateNode1.Active = false;
             this.tStateNode1.DefaultTransition = this.tStateNode2;
             this.tStateNode1.Hint = "";
-            this.tStateNode1.Location = new System.Drawing.Point(16, 95);
+            this.tStateNode1.Location = new System.Drawing.Point(165, 18);
             this.tStateNode1.Name = "tStateNode1";
             this.tStateNode1.Size = new System.Drawing.Size(93, 41);
             this.tStateNode1.StateMachine = this.tStateMachine1;
@@ -155,7 +192,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "StateMachine Test";
             this.tStateMachine1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -168,11 +205,13 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
-        private TStateMachineLibrary.TStateStop tStateStop1;
         private TStateMachineLibrary.TStateNode tStateNode2;
         private TStateMachineLibrary.TStateNode tStateNode1;
         private TStateMachineLibrary.TStateStart tStateStart1;
         private System.Windows.Forms.Button button2;
+        private TStateMachineLibrary.TStateNode tStateNode4;
+        private TStateMachineLibrary.TStateNode tStateNode3;
+        private TStateMachineLibrary.TStateBoolean tStateBoolean1;
     }
 }
 

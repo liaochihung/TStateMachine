@@ -95,7 +95,8 @@ namespace TStateMachineLibrary
                 if ((value != null) && (value.StateMachine != this))
                     throw new Exception("Cannot change to state in another state machine");
 
-                if (Active && IsInDesignMode)
+                //if (Active && IsInDesignMode)
+                if (Active)
                 {
                     Debug.Assert(_thread != null);
                     _thread.State = value;
@@ -159,11 +160,11 @@ namespace TStateMachineLibrary
         /// <summary>
         /// Is in design mode.
         /// </summary>
-        protected bool IsInDesignMode 
+        protected bool IsInDesignMode
         {
-            get { return LicenseManager.UsageMode == LicenseUsageMode.Designtime; } 
+            get { return LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
         }
-                
+
 
         public TStateMachine()
         {
@@ -205,7 +206,7 @@ namespace TStateMachineLibrary
             if (_thread == null)
                 return;
 
-            _thread.Terminate();
+            //_thread.Terminate();
             /*
              if (GetCurrentThreadID = MainThreadID) then
       _thread.WaitFor;
@@ -219,13 +220,15 @@ namespace TStateMachineLibrary
         {
             DestroyThread();
 
-            Debug.Assert(_thread == null);
+            //Debug.Assert(_thread == null);
+
+            //if (_thread != null) 
+            //    return;
 
             if (_thread == null)
-            {
                 _thread = new TStateThread(this);
-                _thread.Start();
-            }
+
+            _thread.Start();
         }
 
         // ------------------------------------------------------------------------------
@@ -330,6 +333,9 @@ namespace TStateMachineLibrary
         // ------------------------------------------------------------------------------
         public void DoStop()
         {
+            // not sure to deactive here
+            _active = false;
+
             if (OnStop == null)
                 return;
             try

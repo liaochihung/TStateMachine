@@ -7,20 +7,18 @@ using System.Windows.Forms;
 
 namespace TStateMachineLibrary
 {
-    public delegate void TBooleanStateEvent(TStateBoolean sender, bool Result);
-
     [ToolboxItem(true)]
+    [DefaultEvent("OnEnterState")]
     public class TStateBoolean : TStateNodeBase
     {
         public TStateBoolean()
         {
+            _default = true;
+
+            _trueConnector = AddConnector(TStatePathOwner.OwnedBySource);
+            _falseConnector = AddConnector(TStatePathOwner.OwnedBySource);
         }
-        public TBooleanStateEvent OnEnterState
-        {
-            get { return FOnEnterState; }
-            set { FOnEnterState = value; }
-        }
-        public object OnExitState;
+
         public TStateControl TrueState
         {
             get { return _trueState; }
@@ -67,14 +65,15 @@ namespace TStateMachineLibrary
                 }
             }
         }
-        private TBooleanStateEvent FOnEnterState = null;
+
         private TStateControl _trueState = null;
         private TStateControl _falseState = null;
         private TStateConnector _trueConnector = null;
         private TStateConnector _falseConnector = null;
+
         private bool _result = false;
-        private bool _default = true;
-        
+        private bool _default;
+
         ~TStateBoolean()
         {
         }
@@ -95,9 +94,38 @@ namespace TStateMachineLibrary
             return result;
         }
 
+        [Category("StateManage")]
+        new public event EventHandler<BooleanStateArgs> OnEnterState;
+
+        protected override void PaintConnector()
+        {
+            base.PaintConnector();
+
+            if (DefaultState)
+            {
+                Canvas.MyPen.Width = 2;
+            }
+            else
+            {
+                Canvas.MyPen.Width = 1;
+            }
+
+            _trueConnector.Paint(Color.Green);
+
+            if (!DefaultState)
+            {
+                Canvas.MyPen.Width = 2;
+            }
+            else
+            {
+                Canvas.MyPen.Width = 1;
+            }
+            _falseConnector.Paint(Color.Red);
+        }
+
         public override void DoPaint(Graphics g)
         {
-            GraphicsPath gp = new GraphicsPath();
+            var gp = new GraphicsPath();
             gp.AddPolygon(new Point[]
             {
                 new Point(0, Height/2), 
@@ -138,9 +166,7 @@ namespace TStateMachineLibrary
             switch (element)
             {
                 case TVisualElement.Text:
-                    // todo : add condition below 
-                    //if not(Assigned(OnEnterState) or (csDesigning in ComponentState)) then
-                    if (IsInDesignMode || (OnEnterState==null))
+                    if (IsInDesignMode || (OnEnterState == null))
                         Canvas.FontColor = Color.Gray;
                     break;
                 case TVisualElement.Shadow:
@@ -155,18 +181,17 @@ namespace TStateMachineLibrary
             return result;
         }
 
-        public void DoEnter()
+        public override void DoEnter()
         {
-            base.DoEnter();
-
             _result = DefaultState;
 
-            if (FOnEnterState == null)
+            if (OnEnterState == null)
                 return;
 
+            var res = new BooleanStateArgs();
             try
             {
-                FOnEnterState(this, _result);
+                OnEnterState(this, res);
             }
             catch (Exception)
             {
@@ -174,9 +199,10 @@ namespace TStateMachineLibrary
                 throw;
             }
 
-            if (StateMachine.State != this) 
+            if (StateMachine.State != this)
                 return;
-            if (_result)
+
+            if (res.Result)
             {
                 if (_trueState != null)
                     StateMachine.State = _trueState;
@@ -209,9 +235,9 @@ namespace TStateMachineLibrary
             var font = new Font(FontFamily.GenericSansSerif, emSize, Canvas.FontStyle);
             font = FindBestFitFont(g, letter, font, this.ClientRectangle.Size);
 
-            SizeF size = g.MeasureString(letter, font);
+            var size = g.MeasureString(letter, font);
 
-            StringFormat sf = new StringFormat();
+            var sf = new StringFormat();
             //sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
 
@@ -221,4 +247,9 @@ namespace TStateMachineLibrary
             font.Dispose();
         }
     }//end TStateBoolean
+
+    public class BooleanStateArgs : EventArgs
+    {
+        public bool Result { get; set; }
+    }
 }

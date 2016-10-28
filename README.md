@@ -7,5 +7,5 @@ This picture comes from that Delphi demo project,
 
 I'm converting this project as a way to learn C#.
 
-Current picture :
-![alt text](Resources/CurrentPicture.png?raw=true "Current Picture")
+Current stage :
+![alt text](Resources/RunStateMachine.png?raw=true "Current Picture")

@@ -23,6 +23,7 @@ namespace TStateMachineLibrary
             {
                 FDefaultTransition = value;
                 FToConnector.Destination = value;
+
                 if (StateMachine != null)
                     StateMachine.Invalidate();
             }

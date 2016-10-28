@@ -22,7 +22,8 @@ namespace StateMachineTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //FunctionTest();
+            EnableRunStateMachine(false);
+
             tStateMachine1.State = tStateStart1;
             tStateMachine1.OnThreadStart += tStateMachine1_OnThreadStart;
             tStateMachine1.Execute();
@@ -85,5 +86,57 @@ namespace StateMachineTest
             label1.Text = _value.ToString();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tStateMachine1.Stop();
+
+            EnableRunStateMachine(true);
+        }
+
+
+        private void tStateNode4_OnEnterState(object sender, EventArgs e)
+        {
+            // true state
+            _value = 999;
+        }
+
+        private void tStateNode3_OnEnterState(object sender, EventArgs e)
+        {
+            // false state
+            _value = 123;
+        }
+
+        private void tStateBoolean1_OnEnterState_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tStateBoolean1_OnEnterState(object sender, BooleanStateArgs e)
+        {
+            // check can this value return to caller
+            e.Result = true;
+        }
+
+        private void tStateMachine1_OnStop(object sender, EventArgs e)
+        {
+            EnableRunStateMachine(true);
+        }
+
+        private void EnableRunStateMachine(bool enable)
+        {
+            if (button1.InvokeRequired)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    button1.Enabled = enable;
+                    button2.Enabled = !enable;
+                }));
+            }
+            else
+            {
+                button1.Enabled = enable;
+                button2.Enabled = !enable;
+            }
+        }
     }
 }

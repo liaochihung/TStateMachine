@@ -127,10 +127,10 @@ namespace TStateMachineLibrary
                 case TStatePath.RightBottom:
                 case TStatePath.LeftRight:
                     if (DirectionX > 0)
-                        lines[TDesignMove.Source] = 
+                        lines[TDesignMove.Source] =
                             new Point(r1.Right + 1, p1.Y);
                     else if (DirectionX < 0)
-                        lines[TDesignMove.Source] = 
+                        lines[TDesignMove.Source] =
                             new Point(r1.Left - 1, p1.Y);
                     else
                         lines[TDesignMove.Source] = p1;
@@ -138,10 +138,10 @@ namespace TStateMachineLibrary
                 case TStatePath.TopLeft:
                 case TStatePath.TopBottom:
                     if (DirectionY > 0)
-                        lines[TDesignMove.Source] = 
+                        lines[TDesignMove.Source] =
                             new Point(p1.X, r1.Bottom + 1);
                     else if (DirectionY < 0)
-                        lines[TDesignMove.Source] = 
+                        lines[TDesignMove.Source] =
                             new Point(p1.X, r1.Top - 1);
                     else
                         lines[TDesignMove.Source] = p1;
@@ -153,10 +153,10 @@ namespace TStateMachineLibrary
                 case TStatePath.TopLeft:
                 case TStatePath.LeftRight:
                     if (DirectionX > 0)
-                        lines[TDesignMove.Destination] = 
+                        lines[TDesignMove.Destination] =
                             new Point(r2.Left - 1, p2.Y);
                     else if (DirectionX < 0)
-                        lines[TDesignMove.Destination] = 
+                        lines[TDesignMove.Destination] =
                             new Point(r2.Right + 1, p2.Y);
                     else
                         lines[TDesignMove.Destination] = p2;
@@ -164,10 +164,10 @@ namespace TStateMachineLibrary
                 case TStatePath.RightBottom:
                 case TStatePath.TopBottom:
                     if (DirectionY > 0)
-                        lines[TDesignMove.Destination] = 
+                        lines[TDesignMove.Destination] =
                             new Point(p2.X, r2.Top - 1);
                     else if (DirectionY < 0)
-                        lines[TDesignMove.Destination] = 
+                        lines[TDesignMove.Destination] =
                             new Point(p2.X, r2.Bottom + 1);
                     else
                         lines[TDesignMove.Destination] = p2;
@@ -183,12 +183,12 @@ namespace TStateMachineLibrary
                     dx = (lines[TDesignMove.Destination].X - lines[TDesignMove.Source].X) / 4;
                     dy = (lines[TDesignMove.Destination].Y - lines[TDesignMove.Source].Y) / 4;
                     lines[TDesignMove.FirstHandle] =
-                        new Point(lines[TDesignMove.Source].X+dx, 
+                        new Point(lines[TDesignMove.Source].X + dx,
                             lines[TDesignMove.Source].Y + dy);
                     lines[TDesignMove.Offset] =
-                        new Point(lines[TDesignMove.Source].X + dx * 2, 
+                        new Point(lines[TDesignMove.Source].X + dx * 2,
                             lines[TDesignMove.Source].Y + dy * 2);
-                    lines[TDesignMove.LastHandle] = 
+                    lines[TDesignMove.LastHandle] =
                         new Point(lines[TDesignMove.Source].X + dx * 3,
                             lines[TDesignMove.Source].Y + dy * 3);
                     break;
@@ -294,7 +294,7 @@ namespace TStateMachineLibrary
             return new Rectangle(a, b, c, d);
         }
 
-        public void Paint()
+        public void Paint(Color? color = null)
         {
             var lines = new Point[TDesignMove.None];
             if (!GetLines(ref lines))
@@ -345,44 +345,47 @@ namespace TStateMachineLibrary
                     arrow[2] = new Point(arrow[0].X + (3 + size), arrow[0].Y - (3 + size) * direction);
                     break;
             }
-            
+
             //g.DrawRectangle(Pens.Chocolate, 10, 10, 100, 100);
             //g.DrawPolygon(new Pen(Color.Black), lines);
-            g.DrawLines(new Pen(Color.Black), lines);
+            //g.DrawLines(new Pen(Color.Black), lines);
+
+            var lineColor = color ?? Color.Black;
+            g.DrawLines(new Pen(lineColor), lines);
 
             saveWidth = Source.StateMachine.PenWidth;
             Source.StateMachine.PenWidth = 1;
-            g.DrawPolygon(new Pen(Color.Black), arrow);
-            g.FillPolygon(new SolidBrush(Color.Black), arrow);
+            g.DrawPolygon(new Pen(lineColor), arrow);
+            g.FillPolygon(new SolidBrush(lineColor), arrow);
             Source.StateMachine.PenWidth = saveWidth;
 
-            if (IsInDesignMode)
+            if (!IsInDesignMode)
+                return;
+
+            if (_selected && Source.StateMachine.Connector == this)
             {
-                if (_selected && Source.StateMachine.Connector == this)
+                for (int i = 1; i < TDesignMove.LastHandle; i++)
                 {
-                    for (int i = 1; i < TDesignMove.LastHandle; i++)
+                    if (i != TDesignMove.Offset ||
+                        !(_actualPath == TStatePath.TopLeft || _actualPath == TStatePath.RightBottom))
                     {
-                        if (i != TDesignMove.Offset ||
-                            !(_actualPath == TStatePath.TopLeft || _actualPath == TStatePath.RightBottom))
-                        {
-                            g.DrawRectangle(
-                                Pens.BlueViolet, 
-                                lines[i].X - 2, 
-                                lines[i].Y - 2, 
-                                lines[i].X + 2, 
-                                lines[i].Y + 2);
-                        }
+                        g.DrawRectangle(
+                            Pens.BlueViolet,
+                            lines[i].X - 2,
+                            lines[i].Y - 2,
+                            lines[i].X + 2,
+                            lines[i].Y + 2);
                     }
                 }
-
-                BoundsRect = MakeRect(lines[TDesignMove.Source], lines[TDesignMove.Destination]);
-                BoundsRect.Inflate(TStateConst.SelectMarginX, TStateConst.SelectMarginY);
-
-                // todo: fix code below
-                //BoundsRect.Inflate(BoundsRect);
-
-                g.Dispose();
             }
+
+            BoundsRect = MakeRect(lines[TDesignMove.Source], lines[TDesignMove.Destination]);
+            BoundsRect.Inflate(TStateConst.SelectMarginX, TStateConst.SelectMarginY);
+
+            // todo: fix code below
+            //BoundsRect.Inflate(BoundsRect);
+
+            g.Dispose();
         }
 
         public void PaintFlipLine()
