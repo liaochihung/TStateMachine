@@ -14,6 +14,8 @@ Class diagram :
 
 ---
 ### License
-[![alt text](http://i.creativecommons.org/l/by-sa/3.0/88x31.png "CC License 3.0 picture")][http://creativecommons.org/licenses/by-sa/3.0/]
+![alt text](http://i.creativecommons.org/l/by-sa/3.0/88x31.png?raw=true "CC License 3.0 picture")[http://creativecommons.org/licenses/by-sa/3.0/]
+
 This work is licensed under a
+
 [Creative Commons Attribution-Share Alike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/)
