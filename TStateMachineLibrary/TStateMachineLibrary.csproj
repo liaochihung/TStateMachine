@@ -94,6 +94,15 @@
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\TStateBoolean.bmp" />
+    <Content Include="Resources\TStateLink.bmp" />
+    <Content Include="Resources\TStateMachine.bmp" />
+    <Content Include="Resources\TStateNode.bmp" />
+    <Content Include="Resources\TStateStart.bmp" />
+    <Content Include="Resources\TStateStop.bmp" />
+    <Content Include="Resources\TStateTransite.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

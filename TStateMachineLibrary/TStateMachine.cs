@@ -13,6 +13,7 @@ namespace TStateMachineLibrary
     [Designer(typeof(TStateMachineDesigner))]
     [ToolboxItem(true)]
     [DesignTimeVisible(true)]
+    [ToolboxBitmap(typeof(TStateMachine), @"D:\Projects\CSharp\TStateMachine\TStateMachineLibrary\Resources\TStateMachine.bmp")]
     public class TStateMachine : UserControl //Control
     {
         public int PenWidth = 1;
@@ -251,7 +252,7 @@ namespace TStateMachineLibrary
             if (Active)
                 throw new Exception("Already executing");
 
-            TStateControl initialState = _state;
+            var initialState = _state;
             _state = null;
 
             CreateThread();
@@ -269,14 +270,26 @@ namespace TStateMachineLibrary
         // ------------------------------------------------------------------------------
         public void Stop()
         {
+            _thread.Stop();
+
             if (!_active)
                 return;
 
             State = null;
             _active = false;
+
+            //_thread.RequestStop();
         }
 
+        public void Pause()
+        {
+            _thread.Pause();
+        }
 
+        public void Resume()
+        {
+            _thread.Resume();
+        }
 
         // ------------------------------------------------------------------------------
         public bool HandlesTransitionEvent()
@@ -381,7 +394,6 @@ namespace TStateMachineLibrary
         public void MouseDown(MouseButtons Button, Keys Shift, int X, int Y)
         {
         }
-
         // Function to determine on which side of the vector c1->c2 the point a lies
         public int MouseMove_cross(Point a, Rectangle c)
         {

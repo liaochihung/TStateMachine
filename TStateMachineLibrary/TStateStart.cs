@@ -8,6 +8,7 @@ namespace TStateMachineLibrary
     /// 
     /// </summary>
     [ToolboxItem(true)]
+    [ToolboxBitmap(typeof(TStateStart), @"D:\Projects\CSharp\TStateMachine\TStateMachineLibrary\Resources\TStateStart.bmp")]
     public class TStateStart : TStateNode
     {
         public TStateStart()

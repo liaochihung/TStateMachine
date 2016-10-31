@@ -16,17 +16,20 @@ namespace StateMachineTest
         public Form1()
         {
             InitializeComponent();
+
+            tStateMachine1.OnThreadStart += tStateMachine1_OnThreadStart;
         }
 
         private int _value = 0;
+        private bool _runningStateMachine = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
             EnableRunStateMachine(false);
 
             tStateMachine1.State = tStateStart1;
-            tStateMachine1.OnThreadStart += tStateMachine1_OnThreadStart;
             tStateMachine1.Execute();
+            _runningStateMachine = true;
         }
 
         private void FunctionTest()
@@ -69,6 +72,8 @@ namespace StateMachineTest
         void n2_OnEnterState(object sender, EventArgs e)
         {
             _value += 10;
+
+            tStateMachine1.Pause();
         }
 
         void n1_OnEnterState(object sender, EventArgs e)
@@ -91,30 +96,13 @@ namespace StateMachineTest
             tStateMachine1.Stop();
 
             EnableRunStateMachine(true);
-        }
 
-
-        private void tStateNode4_OnEnterState(object sender, EventArgs e)
-        {
-            // true state
-            _value = 999;
-        }
-
-        private void tStateNode3_OnEnterState(object sender, EventArgs e)
-        {
-            // false state
-            _value = 123;
-        }
-
-        private void tStateBoolean1_OnEnterState(object sender, BooleanStateArgs e)
-        {
-            // check can this value return to caller
-            e.Result = false;
+            _runningStateMachine = false;
         }
 
         private void tStateMachine1_OnStop(object sender, EventArgs e)
         {
-            EnableRunStateMachine(true);
+            //EnableRunStateMachine(true);
         }
 
         private void EnableRunStateMachine(bool enable)
@@ -134,19 +122,29 @@ namespace StateMachineTest
             }
         }
 
-        private void tStateNode5_OnEnterState(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            _value = 4321;
+            tStateMachine1.State = tStateNode3;
+            tStateMachine1.Resume();
         }
 
-        private void tStateNode6_OnEnterState(object sender, EventArgs e)
+        private void tStateNode3_OnEnterState(object sender, EventArgs e)
         {
-            _value = 1111;
+
         }
 
-        private void tStateTransition1_OnTransition_1(object sender, EventArgs e)
+        private void tStateBoolean1_OnEnterState(object sender, BooleanStateArgs e)
         {
-            _value = 4333;
+            e.Result = false;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_runningStateMachine)
+            {
+                tStateMachine1.Stop();
+                _runningStateMachine = false;
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace TStateMachineLibrary
     /// </summary>
     [DefaultEvent("OnEnterState")]
     [ToolboxItem(true)]
+    [ToolboxBitmap(typeof(TStateNode), @"D:\Projects\CSharp\TStateMachine\TStateMachineLibrary\Resources\TStateNode.bmp")]
     public class TStateNode : TStateNodeBase
     {
         public TStateControl DefaultTransition

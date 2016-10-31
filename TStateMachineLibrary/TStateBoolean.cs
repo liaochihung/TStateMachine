@@ -9,6 +9,7 @@ namespace TStateMachineLibrary
 {
     [ToolboxItem(true)]
     [DefaultEvent("OnEnterState")]
+    [ToolboxBitmap(typeof(TStateBoolean), @"D:\Projects\CSharp\TStateMachine\TStateMachineLibrary\Resources\TStateBoolean.bmp")]
     public class TStateBoolean : TStateNodeBase
     {
         public TStateBoolean()

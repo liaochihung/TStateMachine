@@ -38,10 +38,14 @@ namespace TStateMachineLibrary
             {
                 // Initialize the new task.
                 Status = StatusState.InProgress;
+
                 // Create the thread and run it in the background,
                 // so it will terminate automatically if the application ends.
-                _thread = new Thread(StartTaskAsync);
-                _thread.IsBackground = true;
+                _thread = new Thread(StartTaskAsync)
+                {
+                    IsBackground = true
+                };
+
                 // Start the thread.
                 _thread.Start();
             }
@@ -53,6 +57,7 @@ namespace TStateMachineLibrary
             Status = StatusState.Completed;
             OnCompleted();
         }
+
         public void Join()
         {
             _thread.Join();

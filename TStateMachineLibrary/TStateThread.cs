@@ -1,15 +1,18 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace TStateMachineLibrary
 {
-	public class TStateThread :BaseThread
+	public class TStateThread //:BaseThread
 	{
 	    public TStateControl NewState { get; set; }
         public TStateControl OldState { get; set; }
 
 	    private IntPtr FStartEvent;
 	    private TStateControl _state;
+
+	    private Thread _thread;
 
 	    public TStateControl State
 	    {
@@ -30,7 +33,7 @@ namespace TStateMachineLibrary
 	            NewState = value;
 	            if (value == null)
 	            {
-	                Terminate();
+	                //Terminate();
 	            }
 	            else
 	            {
@@ -38,7 +41,7 @@ namespace TStateMachineLibrary
 	                {
                         // todo: check how this should work.
 	                    //SetEvent(FStartEvent);
-	                    _eventWait.Set();
+	                    //_eventWait.Set();
 	                }
 	            }
 	        }
@@ -82,15 +85,13 @@ namespace TStateMachineLibrary
 	
 	    private void DoTransition()
 	    {
-	        if (Terminated)
-	            return;
-
-	        //if (StateMachine.HandlesTransitionEvent())
+           //if (StateMachine.HandlesTransitionEvent())
 	            StateMachine.DoTransition();
 	    }
 	
-        private EventWaitHandle _eventWait = new AutoResetEvent(false);
-
+        private ManualResetEvent _pauseEvent = new ManualResetEvent(true);
+        private ManualResetEvent _shutdownEvent = new ManualResetEvent(false);
+        
 	    protected void Execute()
 	    {
             StateMachine.ThreadStart();
@@ -102,14 +103,17 @@ namespace TStateMachineLibrary
 	            _state = NewState;
 
                 // Execute state transitions
-                while(!Terminated && _state!=null)
+                while(_state!=null)
 	            {
 	                // do
 	                DoEnterState(_state);
 
-                    Thread.Sleep(500);
-	                if (Terminated)
-	                    break;
+	                _pauseEvent.WaitOne(Timeout.Infinite);
+
+                    if (_shutdownEvent.WaitOne(0))
+                        break;
+
+                    Thread.Sleep(100);
 
 	                // Get next default state unless state was explicitly changed
 	                if (NewState == _state)
@@ -121,10 +125,13 @@ namespace TStateMachineLibrary
 
 	                DoExitState(OldState);
 
-	                if (Terminated)
-	                    break;
+	                _pauseEvent.WaitOne(Timeout.Infinite);
 
 	                _state = NewState;
+
+                    if (_shutdownEvent.WaitOne(0))
+                        break;
+
 	                DoTransition();
 	            }
 
@@ -136,21 +143,48 @@ namespace TStateMachineLibrary
 	        }
 	    }
 
-	    public bool Terminated { get; set; }
 
-	    public void Terminate()
+	    public void Pause()
 	    {
+	        _pauseEvent.Reset();
 	    }
 
-        protected override void DoTask()
+	    public void Resume()
+	    {
+	        _pauseEvent.Set();
+	    }
+
+	    public void Start()
+	    {
+	        _shutdownEvent.Reset();
+
+            _thread = new Thread(StartTaskAsync);
+            _thread.Start();
+	    }
+
+	    public void StartTaskAsync()
+	    {
+	        Execute();
+	    }
+
+	    public void Stop()
+	    {
+	        _shutdownEvent.Set();
+
+	        _pauseEvent.Set();
+
+	        _thread.Join();
+	    }
+
+        protected void DoTask()
         {
             Execute();
         }
 
-        protected override void OnCompleted()
-        {
-            if (OnCompletedEventHandler != null)
-                OnCompletedEventHandler(this, EventArgs.Empty);
-        }
+        //protected override void OnCompleted()
+        //{
+        //    if (OnCompletedEventHandler != null)
+        //        OnCompletedEventHandler(this, EventArgs.Empty);
+        //}
     }//end TStateThread
 }

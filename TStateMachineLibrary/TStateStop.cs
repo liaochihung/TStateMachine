@@ -16,6 +16,7 @@ namespace TStateMachineLibrary
     /// TStateStop
     /// </summary>
     [ToolboxItem(true)]
+    [ToolboxBitmap(typeof(TStateStop), @"D:\Projects\CSharp\TStateMachine\TStateMachineLibrary\Resources\TStateStop.bmp")]
     public class TStateStop : TStateControl
     {
         public TStateStop()

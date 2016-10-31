@@ -264,14 +264,7 @@ namespace TStateMachineLibrary
 
         protected TStateControl GetPeer(int index)
         {
-            if (_owner == TStatePathOwner.OwnedBySource)
-            {
-                return Destination;
-            }
-            else
-            {
-                return Source;
-            }
+            return _owner == TStatePathOwner.OwnedBySource ? Destination : Source;
         }
 
         public static bool PtInRect(int x, int y, Rectangle rect)

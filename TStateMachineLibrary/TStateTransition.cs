@@ -12,6 +12,7 @@ namespace TStateMachineLibrary
     /// </summary>
     [ToolboxItem(true)]
     [DefaultEvent("OnTransition")]
+    [ToolboxBitmap(typeof(TStateTransition), @"D:\Projects\CSharp\TStateMachine\TStateMachineLibrary\Resources\TStateTransition.bmp")]
     public class TStateTransition : TStateControl
     {
         public TStateTransition()
