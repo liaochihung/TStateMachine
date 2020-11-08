@@ -1,9 +1,6 @@
 ### TStateMachine
 Based on delphi [TStateMachine](http://melander.dk/delphi/statemachine/)
 
-Delphi demo project form,
-![Delphi demo form](Resources/TStateMachine demo - Pizzatron 2000.png?raw=true "Demo Picture")
-
 I'm converting this project as a way for learning C#.
 
 Running state:
